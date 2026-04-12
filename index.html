@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Martina Morano</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0e0e;
+      --bg2: #161616;
+      --border: #222;
+      --text: #d4d0c8;
+      --muted: #555;
+      --accent: #c8b89a;
+      --link: #a09080;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.75;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── SIDEBAR ── */
+    aside {
+      width: 240px;
+      min-width: 240px;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      padding: 48px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #2a2520;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 18px;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+
+    .sidebar-name {
+      font-size: 18px;
+      font-weight: 500;
+      color: #e8e4dc;
+      line-height: 1.3;
+    }
+
+    .sidebar-role {
+      font-size: 13px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      margin-top: 4px;
+    }
+
+    .sidebar-location {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    nav a {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 5px 0;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-left: 2px solid transparent;
+      padding-left: 10px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .links a:hover { color: var(--accent); }
+
+    .links a span.icon {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      max-width: 760px;
+      padding: 64px 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+
+    section { display: flex; flex-direction: column; gap: 20px; }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    p { color: var(--text); }
+
+    /* interests */
+    .interest-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .interest-list li {
+      font-size: 16px;
+      color: var(--text);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .interest-list li::before {
+      content: '—';
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    /* education */
+    .edu-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-left: 16px;
+      border-left: 1px solid var(--border);
+    }
+
+    .edu-degree {
+      font-size: 16px;
+      font-weight: 500;
+      color: #e8e4dc;
+    }
+
+    .edu-place, .edu-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* projects */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .project-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .project-card:hover { border-color: #333; }
+
+    .project-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #e8e4dc;
+    }
+
+    .project-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .project-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 2px 6px;
+      width: fit-content;
+      margin-top: 4px;
+    }
+
+    /* publications */
+    .pub-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pub-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #e8e4dc;
+      line-height: 1.5;
+    }
+
+    .pub-authors {
+      font-size: 14px;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .pub-journal {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .pub-links {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .pub-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid #2a2520;
+      padding: 3px 10px;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+
+    .pub-link:hover { background: #2a2520; }
+
+    /* placeholder style */
+    .placeholder {
+      color: #333;
+      font-style: italic;
+      font-size: 15px;
+    }
+
+    /* footer */
+    footer {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: #2a2a2a;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* responsive */
+    @media (max-width: 700px) {
+      body { flex-direction: column; }
+      aside {
+        width: 100%;
+        height: auto;
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 24px 20px;
+        gap: 16px;
+      }
+      .links { flex-direction: row; flex-wrap: wrap; margin-top: 0; }
+      main { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div>
+      <div class="avatar">MM</div>
+      <p class="sidebar-name" style="margin-top: 16px;">Martina Morano</p>
+      <p class="sidebar-role">PhD Student</p>
+      <p class="sidebar-location">
+        <span>📍</span> [University, City]
+      </p>
+    </div>
+
+    <nav>
+      <a href="#about">About</a>
+      <a href="#interests">Interests</a>
+      <a href="#education">Education</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+    </nav>
+
+    <div class="links">
+      <a href="#" target="_blank">
+        <span class="icon">🎓</span> Google Scholar
+      </a>
+      <a href="#" target="_blank">
+        <span class="icon">🔬</span> Scopus
+      </a>
+      <a href="#" target="_blank">
+        <span class="icon">📊</span> ResearchGate
+      </a>
+      <a href="#" target="_blank">
+        <span class="icon">💼</span> LinkedIn
+      </a>
+      <a href="#" target="_blank">
+        <span class="icon">🏛</span> University page
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main>
+
+    <section id="about">
+      <p class="section-label">About</p>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scrivi qui una breve descrizione di chi sei, del tuo dottorato, dei tuoi interessi di ricerca e del tuo background. Puoi aggiungere più paragrafi se necessario.
+      </p>
+      <p class="placeholder">[ Aggiungi un secondo paragrafo se vuoi. ]</p>
+    </section>
+
+    <section id="interests">
+      <p class="section-label">Research interests</p>
+      <ul class="interest-list">
+        <li>[ Interesse di ricerca 1 ]</li>
+        <li>[ Interesse di ricerca 2 ]</li>
+        <li>[ Interesse di ricerca 3 ]</li>
+        <li>[ Interesse di ricerca 4 ]</li>
+      </ul>
+    </section>
+
+    <section id="education">
+      <p class="section-label">Education</p>
+
+      <div class="edu-item">
+        <p class="edu-degree">PhD in [ campo ]</p>
+        <p class="edu-place">[ Università ], [ Città ]</p>
+        <p class="edu-date">[ Anno inizio ] – presente</p>
+      </div>
+
+      <div class="edu-item">
+        <p class="edu-degree">[ Laurea magistrale ] in [ campo ]</p>
+        <p class="edu-place">[ Università ], [ Città ]</p>
+        <p class="edu-date">[ Anno ] – [ Anno ]</p>
+      </div>
+
+      <div class="edu-item">
+        <p class="edu-degree">[ Laurea triennale ] in [ campo ]</p>
+        <p class="edu-place">[ Università ], [ Città ]</p>
+        <p class="edu-date">[ Anno ] – [ Anno ]</p>
+      </div>
+    </section>
+
+    <section id="projects">
+      <p class="section-label">Projects</p>
+      <p style="font-size:14px; color: var(--muted); font-family: 'DM Mono', monospace;">
+        Progetti disponibili su <a href="https://github.com/martinamorano" target="_blank" style="color: var(--accent); text-decoration:none;">GitHub</a>
+      </p>
+      <div class="project-grid">
+        <div class="project-card">
+          <p class="project-title">[ Nome progetto ]</p>
+          <p class="project-desc">Breve descrizione del progetto e del suo scopo.</p>
+          <span class="project-tag">coming soon</span>
+        </div>
+        <div class="project-card">
+          <p class="project-title">[ Nome progetto ]</p>
+          <p class="project-desc">Breve descrizione del progetto e del suo scopo.</p>
+          <span class="project-tag">coming soon</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="publications">
+      <p class="section-label">Publications</p>
+
+      <!-- Copia e incolla questo blocco per ogni pubblicazione -->
+      <div class="pub-item">
+        <p class="pub-title">[ Titolo della pubblicazione ]</p>
+        <p class="pub-authors">[ Autori ] — <em>[ Journal / Conference ], [ Anno ]</em></p>
+        <p class="pub-journal">DOI: [ doi ]</p>
+        <div class="pub-links">
+          <a class="pub-link" href="#" target="_blank">PDF</a>
+          <a class="pub-link" href="#" target="_blank">Scopus</a>
+          <a class="pub-link" href="#" target="_blank">DOI</a>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <p class="pub-title">[ Titolo della pubblicazione ]</p>
+        <p class="pub-authors">[ Autori ] — <em>[ Journal / Conference ], [ Anno ]</em></p>
+        <p class="pub-journal">DOI: [ doi ]</p>
+        <div class="pub-links">
+          <a class="pub-link" href="#" target="_blank">PDF</a>
+          <a class="pub-link" href="#" target="_blank">Scopus</a>
+          <a class="pub-link" href="#" target="_blank">DOI</a>
+        </div>
+      </div>
+
+    </section>
+
+    <footer>
+      © 2026 Martina Morano · martinamorano.github.io
+    </footer>
+
+  </main>
+
+</body>
+</html>
